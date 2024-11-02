@@ -4,6 +4,7 @@ const submitButton = document.getElementById("submitButton");
 const errorMessage = document.getElementById("errorMessage");
 
 let taskIds = [];
+let taskDetailsList = [];
 
 // Add event listener to submit button
 submitButton.addEventListener("click", validateForm);
@@ -45,8 +46,11 @@ async function validateForm(event) {
   // Update taxIds array
   taskIds = await fetchTaskIds();
   console.log(taskIds);
-  taskDetails = await fetchTaskDetails(359);
-  console.log(taskDetails);
+  taskIds.forEach(async (task) => {
+    let taskDetails = await fetchTaskDetails(task);
+    taskDetailsList.push(taskDetails);
+  });
+  console.log(taskDetailsList);
 }
  
 
