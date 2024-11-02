@@ -4,6 +4,7 @@ const submitButton = document.getElementById("submitButton");
 const errorMessage = document.getElementById("errorMessage");
 
 let taskIds = [];
+let taskDetailsList = [];
 
 // Add event listener to submit button
 submitButton.addEventListener("click", validateForm);
@@ -45,6 +46,11 @@ async function validateForm(event) {
   // Update taxIds array
   taskIds = await fetchTaskIds();
   console.log(taskIds);
+  taskIds.forEach(async (task) => {
+    let taskDetails = await fetchTaskDetails(task);
+    taskDetailsList.push(taskDetails);
+  });
+  console.log(taskDetailsList);
 }
  
 
@@ -68,5 +74,28 @@ async function fetchTaskIds() {
       return taskIds; // Return task IDs for further processing
   } catch (error) {
       console.error("Failed to fetch task IDs:", error);
+  }
+}
+
+async function fetchTaskDetails(task) {
+  const url = `https://demonstration.swiftcase.co.uk/api/v2/a92f4f344d55636df0e7cc7abab26dc9/task/${task}.json`;
+
+  try {
+      const response = await fetch(url);
+      
+      if (!response.ok) {
+          throw new Error(`Error: ${response.status} ${response.statusText}`);
+      }
+      
+      // Parse the JSON response
+      const details = await response.json();
+      
+      // Extract task details from the response
+      const taskDetails = details.data;
+      
+      
+      return taskDetails; // Return task details for further processing
+  } catch (error) {
+      console.error("Failed to fetch task details:", error);
   }
 }
