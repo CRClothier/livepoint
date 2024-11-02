@@ -5,6 +5,7 @@ const errorMessage = document.getElementById("errorMessage");
 
 let taskIds = [];
 let taskDetailsList = [];
+let totalCost = 0;
 
 // Add event listener to submit button
 submitButton.addEventListener("click", validateForm);
@@ -46,11 +47,14 @@ async function validateForm(event) {
   // Update taxIds array
   taskIds = await fetchTaskIds();
   console.log(taskIds);
-  taskIds.forEach(async (task) => {
-    let taskDetails = await fetchTaskDetails(task);
-    taskDetailsList.push(taskDetails);
-  });
-  console.log(taskDetailsList);
+
+  // Fetch and display task details for each task ID
+  taskDetailsList = await Promise.all(taskIds.map(async (task) => {
+    return await fetchTaskDetails(task);
+  }));
+
+  calculateTotalCost(taskDetailsList);
+  console.log(totalCost);
 }
  
 
@@ -97,5 +101,15 @@ async function fetchTaskDetails(task) {
       return taskDetails; // Return task details for further processing
   } catch (error) {
       console.error("Failed to fetch task details:", error);
+  }
+}
+
+function calculateTotalCost(array) {
+  for (let subArray of array) {
+    let cost = parseFloat(subArray[0].value);
+    let cancelled = subArray[2].value
+    if (cancelled === "No") {
+      totalCost += cost;
+    }
   }
 }
