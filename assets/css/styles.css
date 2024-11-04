@@ -1,7 +1,12 @@
-body {
-  margin: 0;
-  font-family: Helvetica, sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 
+
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f6f9;
+  color: #333;
 }
 
 h1, h2 {
@@ -14,11 +19,11 @@ ul {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #233;
   padding-right: 1em;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   width: 100%;
+  background-color: #007bff;
 }
 
 li {
@@ -38,25 +43,60 @@ li:hover {
   color: white;
   background-color: rgb(67, 87, 87);
 }
+
 img {
-  width: 30%;
+  width: 150px;
+  height: auto;
   border-radius: 1rem;
   position: absolute;
   bottom: 20px;
   right: 20px;
 }
+
 main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: greenyellow;
-  margin: 15%;
-  border-radius: 1rem;
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    text-align: center;
 }
 
 form {
   text-align: center;
   height: 12rem;
+}
+
+input[type="text"] {
+  width: 80%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+input[type="text"]::placeholder {
+  color: #aaa;
+  font-size: 14px;
+}
+
+button {
+  width: 85%;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
 }
 
 .modal {
@@ -103,4 +143,25 @@ form {
 .task-table th {
   background-color: #f2f2f2;
   font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  ul {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  main {
+      width: 90%;
+      margin: 30px auto;
+      padding: 20px;
+  }
+
+  input[type="text"], button {
+      width: 100%;
+  }
+
+  img {
+      display: none; /* Hide on smaller screens */
+  }
 }
