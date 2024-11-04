@@ -158,8 +158,17 @@ function openModal(taskDetailsList) {
 
     // Fill details object with actual values
     task.forEach(detail => {
+      if (detail.name === "date_ordered") {
+        // Convert date to DD/MM/YYYY format
+        const date = new Date(detail.value);
+        details.date_ordered = date.toLocaleDateString("en-GB", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric"
+        });
+      } else {
       details[detail.name] = detail.value;
-    });
+  }});
 
     // Populate the row cells with the values
     Object.values(details).forEach(value => {
@@ -188,12 +197,14 @@ function openModal(taskDetailsList) {
 // Function to close modal
 closeButton.addEventListener("click", () => {
   taskModal.style.display = "none";
+  totalCost = 0;
 });
 
 // Close modal when clicking outside
 window.addEventListener("click", (event) => {
   if (event.target == taskModal) {
     taskModal.style.display = "none";
+    totalCost = 0;
   }
 });
 
